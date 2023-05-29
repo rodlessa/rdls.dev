@@ -1,9 +1,8 @@
 # example/urls.py
-from django.urls import path
+from django.urls import path,include
 
-from example.views import index
-
+from example.views import namepage
 
 urlpatterns = [
-    path('', index),
+    path('', namepage),
 ]

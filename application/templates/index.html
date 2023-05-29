@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    {% load bootstrap5 %}
+     {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class="area" >
+    <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+    </ul>
+</div >
+<div class="context" >
+    <div class="d-flex flex-column min-vh-100 min-vw-100">
+        <div class="d-flex flex-grow-1 justify-content-center align-items-center">
+          <div class="text-center">
+            <div class="py-5 main_title" id="main_title">Rod Lessa</div>
+            <p>
+                <span class="px-3">Versel</span>
+                <span class="px-3">PlanetScale</span>
+                <span class="px-3">Redes</span>
+                <span class="px-3">Windows Server</span>
+            </p>
+            <p class="pt-5">Este site roda na Vercel com Django!</p>
+        </div>
+        </div>
+      </div>
+    </div>
+</body>
+{% block content %}
+{% endblock %}
+</html>
