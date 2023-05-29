@@ -9,11 +9,12 @@ body{
     font-family: 'Exo', sans-serif;
 }
 
-
+.main_title{
+    font-size: 5em;
+}
 .context {
-    width: 100%;
     position: absolute;
-    top:50vh;
+    top:0vh;
     
 }
 
