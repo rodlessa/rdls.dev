@@ -1,25 +1,17 @@
-# Django running on Vercel
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
 
+# Django + Vercel
 
-## Tutorial
+This example shows how to use Django 4 on Vercel with Serverless Functions using the [Python Runtime](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python).
 
+## Demo
 
-### Install Django
+https://django-template.vercel.app/
 
-```
-$ mkdir vercel-django-example
-$ cd vercel-django-example
-$ pip install Django
-$ django-admin startproject vercel_app .
-```
+## How it Works
 
-### Add an app
+Our Django application, `example` is configured as an installed application in `vercel_app/settings.py`:
 
-```
-$ python manage.py startapp example
-```
-
-Add the new app to your application settings (`vercel_app/settings.py`):
 ```python
 # vercel_app/settings.py
 INSTALLED_APPS = [
@@ -28,21 +20,29 @@ INSTALLED_APPS = [
 ]
 ```
 
-Be sure to also include your new app URLs in your project URLs file (`vercel_app/urls.py`):
-```python
-# vercel_app/urls.py
-from django.urls import path, include
+We allow "\*.vercel.app" subdomains in `ALLOWED_HOSTS`, in addition to 127.0.0.1:
 
-urlpatterns = [
-    ...
-    path('', include('example.urls')),
-]
+```python
+# vercel_app/settings.py
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 ```
 
+The `wsgi` module must use a public variable named `app` to expose the WSGI application:
 
-#### Create the first view
+```python
+# vercel_app/wsgi.py
+app = get_wsgi_application()
+```
 
-Add the code below (a simple view that returns the current time) to `example/views.py`:
+The corresponding `WSGI_APPLICATION` setting is configured to use the `app` variable from the `vercel_app.wsgi` module:
+
+```python
+# vercel_app/settings.py
+WSGI_APPLICATION = 'vercel_app.wsgi.app'
+```
+
+There is a single view which renders the current time in `example/views.py`:
+
 ```python
 # example/views.py
 from datetime import datetime
@@ -63,10 +63,8 @@ def index(request):
     return HttpResponse(html)
 ```
 
+This view is exposed a URL through `example/urls.py`:
 
-#### Add the first URL
-
-Add the code below to a new file `example/urls.py`:
 ```python
 # example/urls.py
 from django.urls import path
@@ -79,83 +77,30 @@ urlpatterns = [
 ]
 ```
 
+Finally, it's made accessible to the Django server inside `vercel_app/urls.py`:
 
-### Test your progress
-
-Start a test server and navigate to `localhost:8000`, you should see the index view you just
-created:
-```
-$ python manage.py runserver
-```
-
-### Get ready for Now
-
-#### Add the Now configuration file
-
-Create a new file `vercel.json` and add the code below to it:
-```json
-{
-    "builds": [{
-        "src": "vercel_app/wsgi.py",
-        "use": "@ardnt/vercel-python-wsgi",
-        "config": { "maxLambdaSize": "15mb" }
-    }],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "vercel_app/wsgi.py"
-        }
-    ]
-}
-```
-This configuration sets up a few things:
-1. `"src": "vercel_app/wsgi.py"` tells Vercel that `wsgi.py` contains a WSGI application
-2. `"use": "@ardnt/vercel-python-wsgi"` tells Now to use the `vercel-python-wsgi` builder (you can
-   read more about the builder at https://github.com/ardnt/vercel-python-wsgi)
-3. `"config": { "maxLambdaSize": "15mb" }` ups the limit on the size of the code blob passed to
-   lambda (Django is pretty beefy)
-4. `"routes": [ ... ]` tells Now to redirect all requests (`"src": "/(.*)"`) to our WSGI
-   application (`"dest": "vercel_app/wsgi.py"`)
-
-
-#### Add Django to requirements.txt
-
-The `vercel-python-wsgi` builder will look for a `requirements.txt` file and will
-install any dependencies found there, so we need to add one to the project:
-```
-# requirements.txt
-Django==2.2.4
-```
-
-
-#### Update your Django settings
-
-First, update allowed hosts in `settings.py` to include `.now.sh`:
 ```python
-# settings.py
-ALLOWED_HOSTS = ['.vercel.app']
+# vercel_app/urls.py
+from django.urls import path, include
+
+urlpatterns = [
+    ...
+    path('', include('example.urls')),
+]
 ```
 
-Second, get rid of your database configuration since many of the libraries Django may attempt to
-load are not available on lambda (and will create an error when python can't find the missing
-module):
-```python
-# settings.py
-DATABASES = {}
+This example uses the Web Server Gateway Interface (WSGI) with Django to enable handling requests on Vercel with Serverless Functions.
+
+## Running Locally
+
+```bash
+python manage.py runserver
 ```
 
+Your Django application is now available at `http://localhost:8000`.
 
-### Deploy
+## One-Click Deploy
 
-With now installed you can deploy your new application:
-```
-$ vercel
-Vercel CLI 21.3.3
-? Set up and deploy “vercel-django-example”? [Y/n] y
-...
-? In which directory is your code located? ./
-...
-✅  Production: https://vercel-django-example.vercel.app [copied to clipboard] [29s]
-```
+Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
 
-Check your results in the [Vercel dashboard](https://vercel.com/dashboard).
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
