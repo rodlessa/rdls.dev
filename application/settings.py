@@ -58,6 +58,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'application.urls'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage' 
 
 TEMPLATES = [
     {
