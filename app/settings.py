@@ -27,11 +27,13 @@ SECRET_KEY = 'django-insecure-#tfzsws$!h)=+hmwl6i40i%60@$xyem-1-zmvxj8tue909pl+-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','.vercel.app','rdls.dev','.rdls.dev']
+ALLOWED_HOSTS = ['*','127.0.0.1','.vercel.app','rdls.dev','.rdls.dev']
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-
+STATIC_ROOT = BASE_DIR / 'static'
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'mystaticfiles'
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -53,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'app.urls'
