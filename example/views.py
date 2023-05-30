@@ -5,8 +5,10 @@ from django.http import HttpResponse
 
 def index(request):
     now = datetime.now()
+    title = 'Rod Lessa - Analista de TI'
     template = loader.get_template('index.html')
     context = {
         'now': now,
+        'title': title
     }
     return HttpResponse(template.render(context, request))
