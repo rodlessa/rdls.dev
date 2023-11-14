@@ -9,7 +9,25 @@ body{
     font-family: 'Exo', sans-serif;
     color: #dedede;
 }
-
+a:link {
+    color: #dedede;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: #dedede;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: #dedede;
+    text-decoration: none;
+  }
+  
+  a:active {
+    color: #dedede;
+    text-decoration: none;
+  }
 .main_title{
     font-size: 5em;
 }

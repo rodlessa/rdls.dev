@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 def index(request):
     now = datetime.now()
-    title = 'Rod Lessa - Analista de TI'
+    title = 'Rod Lessa - Arquiteto de Soluções'
     template = loader.get_template('index.html')
     context = {
         'now': now,
