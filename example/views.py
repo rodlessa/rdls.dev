@@ -12,3 +12,13 @@ def index(request):
         'title': title
     }
     return HttpResponse(template.render(context, request))
+
+def cv(request):
+    now = datetime.now()
+    title = 'Rod Lessa - Arquiteto de Soluções'
+    template = loader.get_template('cv.html')
+    context = {
+        'now': now,
+        'title': title
+    }
+    return HttpResponse(template.render(context, request))
