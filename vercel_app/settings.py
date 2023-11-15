@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'example',
     'whitenoise',
     'bootstrap5',
+    'django_bootstrap_icons',
 ]
 
 MIDDLEWARE = [

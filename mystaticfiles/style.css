@@ -8,7 +8,12 @@
 body{
     font-family: 'Exo', sans-serif;
     color: #dedede;
+    background-color: #292929;
 }
+.bordas{
+    border: 1px solid #fff;
+}
+
 a:link {
     color: #dedede;
     text-decoration: none;
