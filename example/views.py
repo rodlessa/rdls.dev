@@ -37,9 +37,8 @@ def apiexample(request):
     return HttpResponse(template.render(context, request))
 def artigos(request):
     title = 'Rod Lessa - Artigos'
-    template = loader.get_template('examples.html')
+    template = loader.get_template('artigos.html')
     context = {
         'title': title,
-        'nekoimg':loadimgneko,
     }
     return HttpResponse(template.render(context, request))
