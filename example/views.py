@@ -15,11 +15,9 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def cv(request):
-    now = datetime.now()
     title = 'Rod Lessa - Arquiteto de Soluções'
     template = loader.get_template('cv.html')
     context = {
-        'now': now,
         'title': title
     }
     return HttpResponse(template.render(context, request))
@@ -30,11 +28,17 @@ def apiexample(request):
     data = resp.json()
     loadimgneko = data["results"][0]["url"]
     print(data["results"][0]["url"])
-    now = datetime.now()
     title = 'Rod Lessa - Arquiteto de Soluções'
     template = loader.get_template('examples.html')
     context = {
-        'now': now,
+        'title': title,
+        'nekoimg':loadimgneko,
+    }
+    return HttpResponse(template.render(context, request))
+def artigos(request):
+    title = 'Rod Lessa - Artigos'
+    template = loader.get_template('examples.html')
+    context = {
         'title': title,
         'nekoimg':loadimgneko,
     }
