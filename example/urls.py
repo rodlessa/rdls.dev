@@ -7,6 +7,5 @@ from example.views import *
 urlpatterns = [
     path('', index),
     path('cv', cv),
-    path('examples', apiexample),
     path('artigos', artigos),
 ]
