@@ -3,3 +3,5 @@ django-bootstrap-v5
 whitenoise
 requests
 django-bootstrap-icons
+pytz
+tzdata
